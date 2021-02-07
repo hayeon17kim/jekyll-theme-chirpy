@@ -14,7 +14,7 @@ tags: [ spring ]
 
 ## 1강. 정적 컨텐츠
 
-[스프링 부트 정적 컨텐츠 기능]([Spring Boot Features](https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-mvc-static-content))
+[스프링 부트 정적 컨텐츠 기능](https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-mvc-static-content)
 
 기본적으로 스프링 부트는 `/public`이나 `/static`에서 정적 컨텐츠를 찾아서 클라이언트에게 보낸다. 접근할 때는 확장자까지 파일명 그대로 주소창에 쳐야 한다.
 
