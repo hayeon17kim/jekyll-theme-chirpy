@@ -65,7 +65,7 @@ Java, Spring, Spring Boot, MyBatis, JPA, MariaDB, MySQL
 
 ### 3. [HIWORK](https://github.com/muhan-memdori/hiwork)
 >업무 관리 시스템 (팀 프로젝트)  
->2020.01.30 ~ 진행중  
+>2021.01.30 ~ 진행중  
 >
 >기술 스택:  
 >Java 11 / Spring Boot 2.4.2 / Gradle / JPA 
