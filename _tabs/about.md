@@ -5,6 +5,7 @@ order: 2
 ---
 
 # 김하연
+> 개발을 즐기는 개발자
 
 ## 🖐 소개
 
@@ -17,7 +18,7 @@ Java, Spring, MySQL, JPA 등을 사용하여 서비스를 설계, 개발한 경�
 <br>
 
 
-## 💬 Contact
+## 💬 연락처
 
 - Mail:  hayeon17kim@gmail.com
 - Github: https://github.com/hayeon17kim
