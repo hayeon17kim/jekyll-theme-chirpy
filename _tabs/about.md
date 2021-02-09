@@ -41,7 +41,7 @@ Java, Spring, Spring Boot, MyBatis, JPA, MariaDB, MySQL
 >Java 11 / Spring MVC / Gradle / MyBatis / Tomcat
 >MariaDB / MySQL / JSP / JQuery / Ajax
 >
->https://github.com/muhan-memdori/hiwork
+>[프로젝트 상세설명](https://github.com/procompiler/developer-village)
 
 - 태그 기반의 마크다운 지원 게시판 구현
 - 게시글 북마크 기능 구현
@@ -59,7 +59,7 @@ Java, Spring, Spring Boot, MyBatis, JPA, MariaDB, MySQL
 >기술 스택:  
 >Java 11 / Gradle
 >
->https://github.com/hayeon17kim/hackathon-project
+>[프로젝트 상세설명](https://github.com/hayeon17kim/hackathon-project)
 
 ---
 
@@ -71,7 +71,7 @@ Java, Spring, Spring Boot, MyBatis, JPA, MariaDB, MySQL
 >Java 11 / Spring Boot 2.4.2 / Gradle / JPA 
 >MariaDB / MySQL / Thymeleaf / JQuery / Ajax 
 >
->https://github.com/muhan-memdori/hiwork
+>[프로젝트 상세설명](https://github.com/muhan-memdori/hiwork)
 - 사내 게시판: 게시글 및 댓글 관리
 
 <br>
@@ -86,20 +86,18 @@ Java, Spring, Spring Boot, MyBatis, JPA, MariaDB, MySQL
 ## 🏃‍♀️ 활동
 - **개발 동아리 무한맴돌이 팀장** (2020.10 ~ 진행중)
   
-  https://github.com/muhan-memdori
+  >[동아리 상세설명](https://www.notion.so/14e12bb07daf496a93a863ea104ab665)
   - 자료구조, 알고리즘, 네트워크 등 컴퓨터 이론 지식 학습
   - 새로운 기술 학습
   - 사이드 프로젝트 진행
 
 - **비트캠프 자바 웹개발 과정** (2020.08 - 2020.12)
 
-  https://hayeon17kim.github.io/tags/bitcamp/
+  >[공부 기록](https://hayeon17kim.github.io/tags/bitcamp/)
   - Java 언어를 메인으로 객체지향 프로그램을 설계하고 구현
   - CRUD 기반의 RDBMS SQL을 활용
   - Spring Framework을 통해 다양한 개발환경에 대한 표준화된 구현, 설계
   - DB 모델링 설계, 구현
   - 형상관리를 통한 데이터 관리/유지
-  
-  본 과정에서 배운 내용은 기술 블로그에 정리하였습니다. (링크 참조)
 - 파라과이 National University of Asuncion의 Startup Lab에서 봉사활동 (2019.08 ~ 2019.12)
 - 리투아니아 Vilnius University 교환학생 (2018.08 - 2019.02)
