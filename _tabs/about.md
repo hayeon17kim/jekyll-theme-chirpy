@@ -6,9 +6,7 @@ order: 2
 
 # 김하연
 
-- Mail:  hayeon17kim@gmail.com
-- Github: https://github.com/hayeon17kim
-- Web: https://hayeon17kim.github.io
+## 🖐 소개
 
 개발 경험을 공유하거나 기록하는 것을 즐깁니다. 1년 전 개발을 접하면서 시작한 개발 블로그에는 지금까지 230여 개의 기술 포스트를 작성했습니다.
 
@@ -18,7 +16,16 @@ Java, Spring, MySQL, JPA 등을 사용하여 서비스를 설계, 개발한 경�
 
 <br>
 
-## 사용 기술
+
+## 💬 Contact
+
+- Mail:  hayeon17kim@gmail.com
+- Github: https://github.com/hayeon17kim
+- Web: https://hayeon17kim.github.io
+
+<br>
+
+## 🛠 사용 기술
 Java, Spring, Spring Boot, MyBatis, JPA, MariaDB, MySQL
 
 <br>
