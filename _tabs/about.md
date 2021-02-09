@@ -100,4 +100,5 @@ Java, Spring, Spring Boot, MyBatis, JPA, MariaDB, MySQL
   - DB 모델링 설계, 구현
   - 형상관리를 통한 데이터 관리/유지
 - 파라과이 National University of Asuncion의 Startup Lab에서 봉사활동 (2019.08 ~ 2019.12)
+  >[활동 기록](https://www.instagram.com/coi_paraguas/)
 - 리투아니아 Vilnius University 교환학생 (2018.08 - 2019.02)
