@@ -1,5 +1,5 @@
 ---
-title: "정렬: 가장 큰 수"
+title: "정렬(Sort): 가장 큰 수"
 categories: algorithm
 tags: [ algorithm, programmers ]
 ---

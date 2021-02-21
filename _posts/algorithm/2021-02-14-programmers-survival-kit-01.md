@@ -1,5 +1,5 @@
 ---
-title: "그리디: 기지국 설치 문제"
+title: "그리디(Greedy): 기지국 설치 문제"
 categories: algorithm
 tags: [ algorithm, programmers ]
 ---
