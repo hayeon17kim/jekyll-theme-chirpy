@@ -1,128 +1,113 @@
 ---
-title: "해시(Hash): 위장"
+title: "시뮬레이션(Simulation): 숫자게임"
 categories: algorithm
 tags: [ algorithm, programmers ]
 ---
 
 프로그래머스의 [코딩테스트 광탈 방지 Kit: Java편](https://programmers.co.kr/learn/courses/10302) 강의를 참고하여 작성하였습니다.
 
-### 내가 푼 방법
+### 문제
+
+- A팀은 숫자와 숫서가 정해져 있다.
+- B팀의 순서를 조합했을 때 B팀이 배열될 수 있는 모든 경우의 수를 비교해 보고, 그 상황에서의 승점을 계산해서 최댓값을 구하라.
+
+### 내가 시도한 코드
 
 ```java
-public static int solution(String[][] clothes) {
-  int answer = 1;
-  int count = 0;
-  Map<String, Integer> map = new HashMap<>();
-  for (int i = 0; i < clothes.length; i++) {
-    map.put(clothes[i][1], count++);
+public class Simulation {
+  public static void main(String[] args) {
+    System.out.println(solution(new int[] {5, 1, 3, 7}, new int[] {2, 2, 6, 8}));
   }
 
-  for (String key : map.keySet()) {
-    answer *= (map.get(key) + 1);
-  }
+  public static int solution(int[] A, int[] B) {
+    int score = 0;
+    Arrays.sort(B);
+    List<Integer> blist = new LinkedList<>();
+    for (int b : B) blist.add(b);
 
-  return answer - 1;
+    for (int i = 0; i < A.length; i++) {
+      for (int j = 0; j < blist.size(); j++) {
+        if (A[i] < blist.get(j)) {
+          blist.remove(j);
+          score++;
+          continue;
+        } else {
+          blist.remove(0);
+        }
+      }
+    }
+    return score;
+  }
 }
 ```
 
-이러면 샘플 테스트 1번만 맞고 다른 것은 다 틀리다. 여기서 내가 실수한 것이 있는데, count라는 하나의 변수를 재사용한다는 것이다. 이 경우 한 키값에서 사용한 count가 다른 키값에서도 재사용되기 때문에 0부터 시작하지 않는다. 이를 위해서는 각 key에 해당하는 value가 null이면 0을 넣고 1을 증가시키고, null이 아니면1을 증가시키기만 하도록 만들어 줘야 한다. 
+이건 내가 작성했던 코드인데, 이렇게 할 경우 샘플 테스트케이스는 통과하지만 대부분의 테스트 케이스는 통과하지 못하고, 효율성 테스트에서도 모두 시간초과가 났다. 
 
 ### 수업
 
-- 각 종류들을 조합해서 위장을 한다. 모든 경우의 수가 몇 가지가 되는지 물어보는 문제이다. 
-- 위장용품은 착용할 수도 있고 안 할 수도 있다. 
-- 착용 안할 수도 있으니까 경우의 수에 1을 더해서 모두 곱해주면 된다. 
-- 위장 용품을 모두 착용하지 않는 경우도 있으니 이 경우 나중에 1을 빼준다.
-- 문제의 핵심은 경우의 수를 물어보는 것이 아니라, 아이템의 종류별로 개수를 카운트하는 것이다.
-- 문제에서는 headgear 종류가 2개가 있고, eyewear가 1개가 있다. 이름은 중요하지 않고, 종류별로 총 몇 개가 나오는 지 카운트하는 것이 이 문제의 핵심이다.
-- 쉽게 생각하면, 배열 몇 개를 만들어서, 얼굴용은 1번 인덱스에, 상의용은 2번 인덱스에 저장하는 식으로 카운팅할 수도 있지만, 종류가 미리 주어지지 않았다면 할 수 없다.
-- 이 경우 인덱스가 아니라 키 값으로 정보를 저장할 수 있는 해시를 사용하는 것이 좋다.
-- 해시? 배열에 특정 값을 담을 때 어떤 인덱스에 해당 값이 있는 지 찾기 위해서 처음부터 끝까지 모두 탐색을 해야 한다. 매번 인덱스에 접근할 때마다 탐색을 하는 것은 굉장히 비효율적이다. 그래서 해시에서는 key값을 사용한다. key로부터 Hash값을 얻어 Hash값을 인덱스로 사용하는 것이다. 언제든지 해시값만 얻을 수 있다면 탐색 없이 인덱스로 접근 가능하다.
-- 여기서 Hash값은 Hash 함수를 통해서 얻은 값을 말한다. 
-- Hash함수란 최대한 겹치는 값이 발생하지 않도록 유니크 값을 생성해내는 함수이다. 특정 Key에 Hash값을 얻어서 배열의 index로 사용하는 자료구조를 Hash라고 한다.
-- Hash 자료구조는 배열, 리스트, 탐색, 해시 요소를 복합적으로 사용해야 한다. 그래서 자료구조를 질문할 때 Hash 하나만 물어봐도 잘 이해하고 있는 지 알 수 있다. 기술 면접에도 단골 문제이다. 
-- 자바에서는 Hash를 사용한 자료구조를 Map이라고 부른다. 
+- 만약 전체 모든 경우의 수를 다 확인하고, 그 안에서 원하는 값을 찾는다면 탐색법이다. 하지만 **B가 최대 승점으로 이긴다**는 조건이 있고, **이 조건에 맞는 조합을 재현**해낼 수 있다.
+- **특정 상황을 재현**해내는 것이 시뮬레이션한다는 의미이다.
+- **B의 숫자가 근소한 숫자로 이기는 경우**를 봐야 한다. 
+- 그래서 B의 작은 값부터 시작해서 A를 이길수 있는 값을 하나씩 제거해가면서 계산해보자.
+
+시뮬레이션
+
+- **일련의 명령에 따라서 개체를 차례대로 이동**시키는 것.
+- 일반적으로 **2차원 공간을 다루는 문제**가 많이 나온다.
 
 ```java
-public int solution(String[][] clothes) {
-  Map<String, Integer> counts = new HashMap<>();
-  
-  for (String[] c : clothes) {
-    String type = c[1];
-    //counts.put(type, counts.get(type) == null ? 0 : counts.get(type) + 1);
-    counts.put(type, counts.getOrDefault(type, 0) + 1);
+class Solution {
+  public int solution(int[] A, int[] B) {
+    Arrays.sort(B);
+    
+    int answer = 0;
+    for (int i = 0; i < A.length; i++) {
+      for (int j = 0 ; i < B.length; j++) {
+        if (A[i] < B[j]) {
+          answer++;
+          B[j] = 0;
+          break;
+        }
+      }
+    }
   }
-  
-  int answer = 0;
-  
-  for (Integer c : counts.values()) {
-    // 위장용품을 사용하지 않는 경우도 있으니까 + 1
-    answer *= c + 1;
-  }
-  // 위장용품 모두 사용하지 않는 경우는 없으니 - 1
-  answer -= 1; 
-  return answer;
 }
 ```
 
-- `counts.getOrDefault(type, 0)`: `type`에 해당하는 값이 null 이라면 default 값으로 0을 가지고, 그리고 그것에 1을 더해서 `put`한다. `counts.get(type) == null ? 0 : counts.get(type) + 1`과 같다.
-- `counts.values()`: Map 자료구조에는 `values()`라는 메서드가 있다. 이 메서드는 해당 Map의 value들만 모아 Collection으로 리턴한다.
-- `answer *= c + 1`: 위장 용품을 사용하지 않는 경우도 카운트하기 위해 1을 더해주었다.
-- `answer -= 1`:  위에서 계산한 answer 값은 위장 용품을 모두 사용하지 않는 경우도 포함한다. 문제에 따르면 위장 용품을 하나라도 사용해야 하니 1을 빼주었다. 
+- `Arrays.sort(B)`**B팀이 근소한 차이로 이기도록**하는 것이 중요하다. 이를 위해서는 B팀의 작은 숫자부터 비교를 해야 한다. 따라서 우선 B팀을 정렬한다.
+- `B[j] = 0`:  이미 사용한 숫자가 되었으니 다시 사용하지 못하도록 최솟값을 준다. 이 문제에서 1보다 큰값을 조건으로 주고 있기 때문에, 0은 어떤 값과 비교해도 가장 작은 값이 될 테니 사용되지 않을 것이다. 
+- `break`: 그리고 가장 작은 값을 찾아냈기 때문에 **B의 루프는 멈춰도 될 것이다.** 
+  - 이부분에서 나는 continue를 썼는데 break를 썼어야 했다.
+- 이러면 A의 하나의 숫자를 이길 수 있는 B의 가장 작은 수를 찾아서 사용하게 된다.
 
-stream을 사용하여 리팩토링해보자.
+**효율적으로 만들기**
+
+- 위 코드는 기본 테스트는 통과하였으나 효율성 테스트에서 실패하였다.
+- 우선 루프를 의심해보자. 이중 루프를 루프 하나로 처리해보자.
 
 ```java
-public int solution(String[][] clothes) {
-  Map<String, Integer> counts = new HashMap<>();
-  
-  String type;
-  // 옷만 추려서 본다.
-  Arrays.stream(clothes).filter(c -> c[1].equals(type)).count();
-  
-  for (String[] c : clothes) {
-    String type = c[1];
-    //counts.put(type, counts.get(type) == null ? 0 : counts.get(type) + 1);
-    counts.put(type, counts.getOrDefault(type, 0) + 1);
+class Solution {
+  public int solution(int[] A, int[] B) {
+    Arrays.sort(A);
+    Arrays.sort(B);
+    int index = B.length - 1;
+    
+    int answer = 0;
+    for (int i = A.length - 1; i >= 0; i--) {
+      if (A[i] < B[index]) {
+        index--;
+        answer++;
+      }
+    }
   }
-  
-  int answer = 0;
-  
-  for (Integer c : counts.values()) {
-    // 위장용품을 사용하지 않는 경우도 있으니까 + 1
-    answer *= c + 1;
-  }
-  // 위장용품 모두 사용하지 않는 경우는 없으니 - 1
-  answer -= 1; 
 }
 ```
 
-Stream을 이용하여 리팩토링해보자.
+- A도 B처럼 sort를 해놓고 큰 순서대로 따라가면서 B에 있는 큰 수와 비교해 하나씩 제거해나간다.
 
-```java
-public int solution(String[][] clothes) {
-  return Arrays.stream(clothes)
-    .map(c -> c[1])
-    .distinct()
-    .map(type -> (int) Arrays.stream(clothes).filter(c -> c[1].equals(type)).count())
-    .map(c -> c + 1)
-    .reduce(1, (c, n) -> c * n) - 1;
-}
-```
+- A의 가장 큰 값과 B의 가장 큰 값을 비교했는데 A가 더 크다면 A는 이길 수 없는 숫자가 된다. 그럼 B에서 가장 큰 수를 A의 다음번 큰 숫자와 비교해야 한다.
+- B가 이길 수 있는 숫자라면 B의 숫자가 사용된다. index는 하나 감소되고, 승점이 하나 올라간다.
+- **A와 B 모두 정렬을 해놓고 서로 큰 값을 비교해가면서 계산을 해줬다. 이중루프에서 단일루프로 변경되었고, 따라서 효율성테스트에 통과되었다.**
 
-- 전체 옷을 stream을 사용하여 filter로 첫번째 요소가 타입과 같은지 보고 그것의 카운트를 구하면 type의 개수를 구할 수 있다. 
-- 각 타입은 전체 위장용품 중에서 1번 인덱스에 있는 값이고, 이것이 여러개가 나올 수 있으니 중복을 제거해야 한다. 그리고 여기에 type값을 
-- `Arrays.stream(clothes)`: 모든 옷의 종류가 있는데 
-- `map(c -> c[1])`: 그 중에 1번 인덱스에 있는 type만 꺼내서 
-- `distict()`: 중복 없이 가져온다.
-- `map(type -> (int) Arrays.stream(clothes).filter(c -> c[1].equals(type)).count())`:  이 type에 해당하는 것만 필터링해서 count를 얻어오면 종류별로 몇 개인지 알 수 있고,
-- `map(c -> c + 1)`: 그것에 1을 더해서
-- `reduce(1, (c, n) -> c * n)`: 모두 누적해서 곱한 값을 구한다.
 
-### 결론
 
-**Tip 코딩 스킬을 향상시키는 방법**
-
-- 문제를 풀이한다.
-- 다른 방식으로 풀어본다.
-- 다른 표현으로 바꿔본다. 
