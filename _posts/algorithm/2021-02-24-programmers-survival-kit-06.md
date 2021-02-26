@@ -76,6 +76,8 @@ public Solution {
 - Queue를 이용해서 Queue에 초기값을 넣고 큐가 빌 때까지 루프를 돌면서 처리할 수 있는 값을 계속 큐에 집어넣는 방식
 - 이동 경로의 거리가 필요하기 때문에 count 값이 필요하다.
 
+{% raw %}
+
 ```java
 import java.util.*;
 
@@ -131,5 +133,4 @@ class Solution {
 }
 ```
 
-
-
+{% endraw %}
