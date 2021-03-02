@@ -1,5 +1,5 @@
 ---
-title: "깊이우선탐색(DFS):괄호"
+title: "깊이우선탐색(DFS): 올바른 괄호의 개수"
 categories: algorithm
 tags: [ algorithm, programmers ]
 ---
