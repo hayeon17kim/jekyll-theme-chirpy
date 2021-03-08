@@ -122,8 +122,6 @@ UI 프로토타이핑 툴은 Figma를 사용했다.
 
 ## 개발
 
-관리자 화면에서 뱃지의 기준을 추가하고 수정하고 삭제할 수 있다.
-
 ### 뱃지 수집 기능
 
 뱃지와 뱃지 기준 CRUD는 구현하기 어렵지 않았다. 그러나 뱃지 조건에 맞는 유저를 확인하고 이를 수여하는 기능은 어떻게 구현해야 할 지 감이 잡히지 않았다. 
@@ -270,9 +268,11 @@ $(function() {
 
 **뱃지 순서 변경**
 
+뱃지 순서 변경 과정을 그림으로 표현하면 다음과 같다.
+
 ![image](https://user-images.githubusercontent.com/50407047/110322386-67af0c00-8056-11eb-809c-d832f9d641c8.png)
 
-클라이언트가 `"3, 2, 1, 4"` 문자열과 함께 `/app/ajax/collect/updateOrder/` 요청을 보내면 DispatcherServlet은 이 요청을 받아 CollectController가 요청을 처리하도록 보낸다. 그러면 CollectController는 Service, Dao를 거쳐 DB에 있는 유저-뱃지(`usr_bdg`) 테이블에 있는 순서 컬럼을 변경한다.  
+클라이언트가 뱃지고유번호를 변경한 순서대로 나열한 문자열(`"3, 2, 1, 4"` )과 함께 `/app/ajax/collect/updateOrder/` 요청을 보내면 `DispatcherServlet`은 이 요청을 받아 `CollectController`가 요청을 처리하도록 보낸다. 그러면 `CollectController`는 `Service`, `Dao`를 거쳐 DB에 있는 유저-뱃지(`usr_bdg`) 테이블에 있는 순서 컬럼을 변경한다.  
 
 **CollectController**
 
