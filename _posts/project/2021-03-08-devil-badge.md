@@ -15,9 +15,9 @@ toc: true
 
 - 📜 [요구사항](#요구사항)
 
-- ✨ [UI Prototyping](#UI Prototyping)
+- ✨ [유아이 프로토타입](#유아이-프로토타입)
 
-- 📂 [DB Modeling](#DB Modeling)
+- 📂 [데이터베이스 모델링](#데이터베이스-모델링)
 
 - 💻 [개발](#개발)
 
@@ -86,7 +86,7 @@ okky에서는 활동을 많이 할 수록 활동 점수가 쌓인다.
 
 - 유저는 받은 뱃지로 마이페이지를 꾸밀 수 있다.
 
-## UI Prototyping
+## 유아이 프로토타입
 
 UI 프로토타이핑 툴은 Figma를 사용했다. 
 
@@ -106,7 +106,7 @@ UI 프로토타이핑 툴은 Figma를 사용했다.
 
 ![image](https://user-images.githubusercontent.com/50407047/110245680-9e7a1900-7fa7-11eb-9a2a-5fdc1a0d0244.png)
 
-## DB Modeling
+## 데이터베이스 모델링
 
 뱃지 시스템을 위한 테이블은 다음과 같다.
 
