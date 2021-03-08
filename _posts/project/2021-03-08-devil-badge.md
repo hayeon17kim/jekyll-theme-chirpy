@@ -49,7 +49,7 @@ okky에서는 활동을 많이 할 수록 활동 점수가 쌓인다.
 
 **2. 로고 스티커가 붙은 개발자의 노트북**
 
-![man wearing white top using MacBook](https://images.unsplash.com/photo-1456406644174-8ddd4cd52a06?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1000&q=80)
+![image](https://user-images.githubusercontent.com/50407047/110345977-760b2100-8072-11eb-9eb0-0330a277c150.png)
 
 개발자들을 보면 자신이 사용하는 언어의 로고 스티커를 노트북에 덕지덕지 붙이고 있는 것을 흔히 볼 수 있다. 이 점에서 착안하여, 각 언어에 대한 글을 많이 쓰면 해당 언어 로고 스티커를 얻을 수 있도록 만들어보자..! 는 것이 목표였다.
 
@@ -208,8 +208,6 @@ public class CollectJob {
 
 받은 뱃지는 수집한 순서대로 마이페이지에서 조회할 수 있다. 그러나 이를 유저의 선호에 따라 순서를 변경할 수 있는 기능을 추가하기 위해서 고민했다. 유저마다 선호하는 뱃지가 다를 거라고 생각했기 때문이다. 예를 들어 나는 Java 개발자인데, 최근에 HTML과 CSS 게시판에서 글을 많이 썼다는 이유로 HTML 뱃지와 CSS 뱃지가 Java 뱃지보다 앞에 나오면 속상하지 않겠는가..
 
-![image](https://user-images.githubusercontent.com/50407047/110324695-aabeae80-8059-11eb-9169-bc8eb16cba67.png)
-
 드래그앤 드롭 기능 자체는 jQuery UI를 사용해 구현하였다. 문제는 드래그앤 드롭으로 순서를 변경했을 때, 변경한 순서를 `db` 에`update`해야 한다는 것이다. 그렇지 않으면 새로고침을 했을 때 다시 변경 전 원래 순서대로 돌아오고 만다. 따라서 순서가 변경되었을 때, 서버에 비동기 요청을 보내 서버가 `db`에 해당 유저의 전체 뱃지 순서를`update`하도록 만들었다. 
 
 **뱃지 리스트**
@@ -347,5 +345,7 @@ public interface CollectDao {
 
 
 ## 리팩토링
+
+작업 중입니다.
 
 {% endraw %}
