@@ -7,6 +7,8 @@ toc: true
 
 개발자 소셜 네트워크 서비스인 "DEVIL(Developer Villlage)😈"의 뱃지 수집 기능을 구현하기까지의 과정을 정리하였습니다.
 
+{% raw %}
+
 ## 바로가기
 
 - 🤔 [기획](#기획)
@@ -353,3 +355,5 @@ public interface CollectDao {
 
 
 ## 6.리팩토링
+
+{% endraw %}
