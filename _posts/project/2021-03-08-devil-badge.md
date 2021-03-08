@@ -15,9 +15,9 @@ toc: true
 
 - 📜 [요구사항](#요구사항)
 
-- ✨ [UI Prototyping](#UI-Prototyping)
+- ✨ [UI Prototyping](#UI Prototyping)
 
-- 📂 [DB Modeling](#ERD설계)
+- 📂 [DB Modeling](#DB Modeling)
 
 - 💻 [개발](#개발)
 
