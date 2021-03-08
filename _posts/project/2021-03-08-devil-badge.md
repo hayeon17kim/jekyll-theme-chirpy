@@ -5,13 +5,33 @@ tags: [project, devil]
 toc: true
 ---
 
-## 개발자를 위한 소셜 네트워크 서비스: 뱃지 시스템 구현하기
+개발자 소셜 네트워크 서비스인 "DEVIL(Developer Villlage)😈"의 뱃지 수집 기능을 구현하기까지의 과정을 정리하였습니다.
 
-개발자 소셜 네트워크 서비스를 구현할 때 꼭 해보고 싶은 서비스가 있었으니, 언어별 뱃지 수여/수집 시스템을 구현하는 것이었다.
+## 바로가기
 
-### 기획 단계
+- 🤔 [기획](#기획)
 
-어쩌다 '뱃지 시스템'이 나왔는가..? 기획의 계기는 다음 세 가지다.
+- 📜 [요구사항](#요구사항)
+
+- ✨ [UI프로토타입](#UI프로토타입)
+
+- 📂 [ERD설계](#ERD설계)
+
+- 💻 [개발](#개발)
+
+  - [뱃지 수집 기능](#뱃지-수집-기능)
+
+    Batch Scheduler로 뱃지 수집 기능 구현하기
+
+  - [수집한 뱃지 순서 변경 기능](#수집한-뱃지-순서-변경-기능)
+
+    마이페이지에서 드래그 앤 드롭으로 뱃지 순서를 변경하도록 구현하기
+
+- 🔨 [리팩토링](#리팩토링)
+
+## 기획 단계
+
+개발자 소셜 네트워크 서비스를 구현할 때 꼭 해보고 싶은 서비스가 있었으니, 언어별 뱃지 수여/수집 시스템을 구현하는 것이었다. 어쩌다 '뱃지 시스템'이 나왔는가..? 기획의 계기는 다음 세 가지다.
 
 **1. 로고 스티커가 붙은 개발자의 노트북**
 
@@ -37,7 +57,7 @@ toc: true
 
 네이버 카페 서비스에서는 멤버마다 등급을 부여하는 등급 관리 메뉴가 제공된다. 여기서는 자동 등업, 등업 게시판, 수동 등업으로 나눠져 있는데 내가 개발해야 할 커뮤니티는 자동 등업, 즉 유저가 뱃지의 조건을 채우면(특정 태그를 단 게시글을 100개 이상 쓴다) 뱃지가 자동으로 회원에게 부여되도록 구현해야 한다.
 
-**결론**
+## 요구사항
 
 - 각 태그에 해당하는 뱃지가 있다.
 
@@ -56,7 +76,7 @@ toc: true
 
 - 유저는 받은 뱃지로 마이페이지를 꾸밀 수 있다.
 
-### UI 프로토타입
+## UI프로토타입
 
 UI 프로토타이핑 툴은 Figma를 사용했다. 
 
@@ -76,7 +96,7 @@ UI 프로토타이핑 툴은 Figma를 사용했다.
 
 ![image](https://user-images.githubusercontent.com/50407047/110245680-9e7a1900-7fa7-11eb-9a2a-5fdc1a0d0244.png)
 
-### ERD 설계
+## ERD설계
 
 뱃지 시스템을 위한 테이블은 다음과 같다.
 
@@ -90,43 +110,13 @@ UI 프로토타이핑 툴은 Figma를 사용했다.
 
 ![img](https://user-images.githubusercontent.com/50407047/105466251-4cbb4f00-5cd7-11eb-9075-35ad804753f5.png)
 
-### 개발
+## 개발
 
 관리자 화면에서 뱃지의 기준을 추가하고 수정하고 삭제할 수 있다.
 
-#### 뱃지 기준 관리
-
-```java
-@Controller
-@RequestMapping("/badgeStan")
-public class BadgeStanController {
-
-  @Autowired
-  BadgeStanService badgeStanService;
-
-  @PostMapping("add")
-  public String add(BadgeStan badgeStan) throws Exception {
-    badgeStanService.add(badgeStan);
-    return "redirect:../badge/" + badgeStan.getBadgeNo();
-  }
-
-  @PostMapping("update")
-  public String update(BadgeStan badgeStan, int no) throws Exception {
-    badgeStanService.update(badgeStan.setNo(no));
-    return "redirect:../badge/" + badgeStan.getBadgeNo();
-  }
-
-  @GetMapping("delete")
-  public String delete(BadgeStan badgeStan) throws Exception {
-    badgeStanService.delete(badgeStan.getNo());
-    return "redirect:../badge/" + badgeStan.getBadgeNo();
-  }
-}
-```
+### 뱃지 수집 기능
 
 뱃지 CRUD와 뱃지 기준 CRUD는 구현하기 어렵지 않았다. 
-
-#### 뱃지 수집
 
 그러나 뱃지 조건에 맞는 유저를 확인하고 이를 수여하는 기능은 어떻게 구현해야 할 지 감이 잡히지 않았다. 
 
@@ -139,8 +129,6 @@ public class BadgeStanController {
 배치 스케줄러(Batch Scheduler)란 일괄 처리(Batch Processing) 작업이 설정된 주기에 맞춰 자동으로 수행되도록 지원해주는 도구를 말한다. 특정 업무(Job)를 원하는 시간에 처리할 수 있도록 지원한다는 특성 때문에 Job Scheduler라고도 불린다.
 
 배치 스케줄러에는 Spring Batch와 Quartz가 대표적인데, 간단한 스케줄링의 경우 Quartz를 사용하면 편하다고 하여 Quartz를 사용하기로 하였다.
-
-**뱃지 수집**
 
 해당 어플은 특정 시간(새벽 3시)마다 회원들의 활동량과 뱃지 기준들을 비교해, 기준에 충족할 경우 회원이 뱃지를 수집하도록 만드는 (`DB`에 `insert`하는) 배치다.
 
@@ -214,7 +202,7 @@ public class CollectJob {
 
 회원이 가지고 있지 않은 뱃지 중 기준에 충족하는 뱃지가 있다면 이를 새벽 3시에 자동으로 수여한다. 회원은 이를 알림창과 마이페이지에서 확인할 수 있다.
 
-#### 마이페이지 꾸미기: 드래그 앤 드롭으로 뱃지 순서 변경하기
+### 뱃지 순서 변경 기능
 
 받은 뱃지는 수집한 순서대로 마이페이지에 공개된다. 그러나 사용자 경험 측면에서 유저의 선호에 따라 순서를 변경할 수 있도록 만들고자 하였다. 백엔드 개발자라면 HTML, CSS보다 자바, 스프링 등 백엔드 관련 뱃지가 더 앞에 오길 원할 것이라는 생각에서다.
 
@@ -281,6 +269,8 @@ $(function() {
 **뱃지 순서 변경**
 
 ![image](https://user-images.githubusercontent.com/50407047/110322386-67af0c00-8056-11eb-809c-d832f9d641c8.png)
+
+클라이언트가 `"3, 2, 1, 4"` 문자열과 함께 `/app/ajax/collect/updateOrder/` 요청을 보내면 DispatcherServlet은 이 요청을 받아 CollectController가 요청을 처리하도록 보낸다. 그러면 CollectController는 Service, Dao를 거쳐 DB에 있는 유저-뱃지(`usr_bdg`) 테이블에 있는 순서 컬럼을 변경한다.  
 
 **CollectController**
 
@@ -350,3 +340,4 @@ public interface CollectDao {
 </update>
 ```
 
+## 리팩토링
