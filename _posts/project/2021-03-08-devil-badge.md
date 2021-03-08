@@ -222,9 +222,13 @@ public class CollectJob {
 
 **뱃지 리스트**
 
-유저가 드래그 앤 드롭으로 뱃지 순서를 변경할 때마다, **뱃지 번호가 변경된 순서대로 `,`로 연결된 문자열과 함께 서버에게 뱃지 순서를 업데이트하라는 비동기 요청**을 보낸다. 
+유저가 드래그 앤 드롭으로 뱃지 순서를 변경할 때마다, <mark><strong>뱃지 고유번호</strong>가 <strong>변경된 순서대로</strong> `,`로 <strong>연결된 문자열</strong>과 함께 클라이언트는 서버에게 뱃지 순서를 업데이트하라는 <strong>비동기 요청</strong>을 보낸다.</mark> 
+
+드래그앤 드롭을 할 때마다 생성되는 문자열의 예시이다.
 
 ![image](https://user-images.githubusercontent.com/50407047/110316118-9eccef80-804d-11eb-92ab-0482953abf92.png)
+
+클라이언트는 이 문자열을 서버에 비동기 요청으로 보낸다. 
 
 ```jsp
 <div class="col-3">
@@ -276,6 +280,10 @@ $(function() {
 
 **뱃지 순서 변경**
 
+![image](https://user-images.githubusercontent.com/50407047/110322386-67af0c00-8056-11eb-809c-d832f9d641c8.png)
+
+**CollectController**
+
 ```java
 @Controller("ajax.collectController")
 @RequestMapping("/ajax/collect")
@@ -305,7 +313,7 @@ public class CollectController {
 }
 ```
 
-**뱃지 변경 Service**
+**CollectService**
 
 ```java
 @Service
@@ -321,5 +329,24 @@ public class DefaultCollectService implements CollectService {
   }
   //..
 }
+```
+
+**CollectDao**
+
+```java
+public interface CollectDao {
+  //..
+  void updateOrder(Collect collect) throws Exception;
+}
+```
+
+**CollectMapper**
+
+```mysql
+<update id="updateOrder" parameterType="collect">
+    update usr_bdg set
+    ord = #{order}
+    where uno=#{user.no} and bno=#{badge.no};
+</update>
 ```
 
