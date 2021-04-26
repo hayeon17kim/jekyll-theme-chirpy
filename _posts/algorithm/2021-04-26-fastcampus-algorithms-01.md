@@ -5,6 +5,8 @@ tags: [ algorithms ]
 toc: true
 ---
 
+![알고리즘-2](https://user-images.githubusercontent.com/50407047/116121239-649dd700-a6fb-11eb-9078-8d85d1f7c9c3.jpg)
+
 ## 파이썬으로 그래프를 표현하는 방법
 
 파이썬에서 제공하는 딕셔너리와 리스트 자료 구조를 활용해서 그래프를 표현할 수 있음
