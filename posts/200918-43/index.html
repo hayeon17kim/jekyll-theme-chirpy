@@ -1,0 +1,705 @@
+<!DOCTYPE html><html lang="kr-KR" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="pv-cache-enabled" content="false"><meta name="generator" content="Jekyll v4.2.0" /><meta property="og:title" content="학원 #43일차: 파일 입출력 API" /><meta name="author" content="hayeon_kim" /><meta property="og:locale" content="kr_KR" /><meta name="description" content="스트림" /><meta property="og:description" content="스트림" /><link rel="canonical" href="https://hayeon17kim.github.io//posts/200918-43/" /><meta property="og:url" content="https://hayeon17kim.github.io//posts/200918-43/" /><meta property="og:site_name" content="하연" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2020-09-18T00:00:00+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="학원 #43일차: 파일 입출력 API" /><meta name="twitter:site" content="@MONI56219559" /><meta name="twitter:creator" content="@hayeon_kim" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"author":{"@type":"Person","name":"hayeon_kim"},"headline":"학원 #43일차: 파일 입출력 API","dateModified":"2020-09-18T00:00:00+08:00","datePublished":"2020-09-18T00:00:00+08:00","description":"스트림","url":"https://hayeon17kim.github.io//posts/200918-43/","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://hayeon17kim.github.io//posts/200918-43/"},"@context":"https://schema.org"}</script><title>학원 #43일차: 파일 입출력 API | 하연</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-173202420-1"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-173202420-1'); }); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="/assets/img/bio-photo.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">하연</a></div><div class="site-subtitle font-italic">어제보다 나은 코드를 위해</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/projects/" class="nav-link"> <i class="fa-fw fas fa-laptop-code ml-xl-3 mr-xl-3 unloaded"></i> <span>PROJECTS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/hayeon17kim" aria-label="github" class="order-3" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/MONI56219559" aria-label="twitter" class="order-4" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['hayeon17kim','gmail.com'].join('@')" aria-label="email" class="order-5" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" class="order-6" > <i class="fas fa-rss"></i> </a> <span class="icon-border order-2"></span> <span id="mode-toggle-wrapper" class="order-1"> <i class="mode-toggle fas fa-adjust"></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.updateMermaid(); }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer) ) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } updateMermaid() { if (typeof mermaid !== "undefined") { let expectedTheme = (this.modeStatus === ModeToggle.DARK_MODE? "dark" : "default"); let config = { theme: expectedTheme }; /* re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */ $(".mermaid").each(function() { let svgCode = $(this).prev().children().html(); $(this).removeAttr("data-processed"); $(this).html(svgCode); }); mermaid.initialize(config); mermaid.init(undefined, ".mermaid"); } } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateMermaid(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>학원 #43일차: 파일 입출력 API</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>학원 #43일차: 파일 입출력 API</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Fri, Sep 18, 2020, 12:00 AM +0800" > Sep 18, 2020 <i class="unloaded">2020-09-18T00:00:00+08:00</i> </span> by <span class="author"> hayeon_kim </span></div><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="6096 words">33 min</span></div></div><div class="post-content"><h2 id="스트림">스트림</h2><div class="table-wrapper"><table><thead><tr><th> <th>byte stream<th>character stream<tbody><tr><td>입력<td>InputStream<td>Reader<tr><td>출력<td>Reader<td>Writer</table></div><p>이 클래스들은 모두 추상 클래스이다.</p><div class="table-wrapper"><table><thead><tr><th> <th>Input<th>Output<tbody><tr><td>File<td>FileInputStream<br />FileReader<td>FileOutputStream<br />FileWriter<tr><td>Memory<td>ByteArrayInputStream<br />CharArrayReader<br />StringReader<td>ByteArrayOutputStream<br />CharArrayWriter<br />StringWriter<tr><td>Process<td>PippedInputStream<br />PippedReader<td>PippedOutputStream<br />PippedWriter</table></div><p>파일을 덮어쓰지 않으려면? =&gt; boolean append를 파라미터로 받는 메서드 사용</p><h2 id="바이너리-파일-vs-텍스트-파일">바이너리 파일 vs 텍스트 파일</h2><h3 id="바이너리-파일">바이너리 파일</h3><ul><li>기본 텍스트 편집기(메모장, vi 에디터 등)로 편집할 수 없는 파일을 말한다.<li>만약 텍스트 편집기로 변경한 후 저장하면, 파일 포맷이 깨지기 때문에 무효한 파일이 된다.<li>예) .pdf, .ppt, .xls, .gif, .mp3, .jpg, .hwp, .mov, .avi, .exe, .lib 등<li><p>바이너리 파일을 편집하려면 해당 파일 포맷을 이해하는 전용 프로그램이 필요하다.</p><li>바이너리 데이터 읽고 쓰기<ul><li>읽고 쓸 때 중간에서 변환하는 것 없이 바이트 단위로 그대로 읽고 써야 한다.<li>InputStream / OutputStream 계열의 클래스를 사용한다.</ul></ul><h3 id="텍스트-파일">텍스트 파일</h3><ul><li>기본 텍스트 편집기(메모장, vi 에디터 등)로 편집할 수 있는 파일을 말한다.<li>예) .txt, .csv, .html, .js, .css, .xml, .bat, .c, .py, .php, .docx, .pptx, .xlsx 등<li>텍스트 파일은 전용 에디터가 필요 없다.<li><p>텍스트를 편집할 수 있는 에디터라면 편집 후 저장해도 유효하다.</p><li>텍스트 데이터 읽고 쓰기<ul><li>읽고 쓸 때 중간에서 문자 코드표에 따라 변환하는 것이 필요하다.<li>Reader / Writer 계열의 클래스를 사용한다.</ul></ul><h2 id="byte-stream">Byte Stream</h2><h3 id="바이트-단위로-출력하기">바이트 단위로 출력하기</h3><p>1) 파일로 데이터를 출력하는 객체를 준비한다.</p><ul><li><code class="language-plaintext highlighter-rouge">new FileOutputStream(파일명로)</code><li>지정된 경로에 해당 파일을 자동으로 생성한다.<li>기존에 같은 이름의 파일이 있으면 덮어 쓴다. 기존 파일은 삭제되기 때문에 주의하자.<li>파일 경로가 절대 경로가 아니라면 현재 디렉토리가 기준이 된다.<ul><li>Linux, Unix: <code class="language-plaintext highlighter-rouge">/</code>로 시작하지 않으면<li>Windows: <code class="language-plaintext highlighter-rouge">c:\</code>, <code class="language-plaintext highlighter-rouge">d:\</code> 등으로 시작하지 않으면</ul></ul><p>2) 1바이트를 출력한다. (<code class="language-plaintext highlighter-rouge">write()</code>)</p><ul><li>int 값을 아규먼트로 넘기더라도 맨 마지막 1바이트만 출력한다.</ul><p>3) 출력 도구를 닫는다.</p><ul><li>OS에서 관리하는 자원 중에서 한정된 개수를 갖는 자원에 대해 여러 프로그램이 공유하는 경우, 항상 사용 후 OS에 반납해야 한다. 그래야 다른 프로그램이 해당 자원을 사용할 수 있다.<li>ex) 파일, 메모리, 네트워크 연결 등<li>이런 자원을 사용하는 클래스는 보통 <code class="language-plaintext highlighter-rouge">java.lang.AutoCloseable</code> 인터페이스를 구현하여 자원을 해제시키는 <code class="language-plaintext highlighter-rouge">close()</code>라는 메서드가 있다. <code class="language-plaintext highlighter-rouge">FileOutputStream</code> 클래스도 마찬가지이다.<li>따라서 <code class="language-plaintext highlighter-rouge">FileOutputStream</code> 객체를 사용한 후에는 <code class="language-plaintext highlighter-rouge">close()</code>를 호출하여 사용한 자원을 해제시켜야 한다.<li><code class="language-plaintext highlighter-rouge">close()</code>를 호출하면 <code class="language-plaintext highlighter-rouge">FileOutputStream</code>이 작업하는 동안 사용했던 모든 자원은 자동으로 해제된다.<li>다음의 예제처럼 짧은 시간동안 실행되는 경우, <code class="language-plaintext highlighter-rouge">close()</code>를 호출하지 않아도 자원을 해제시키는 데 문제가 없다.<li>문제는 24시간 365일 멈추지 않고 실행하는 서버 프로그램이다. 이 경우 사용한 자원을 즉시 해제시키지 않으면 자원 부족 문제가 발생한다. 우리는 앞으로 자바로 서버 프로그램을 작성할 것이기 때문에 간단한 프로그램을 작성하더라도 close()를 호출하는 것을 습관들여야 한다.</ul><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="nc">FileOutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="s">"temp/test1.data"</span><span class="o">);</span>
+<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="mh">0x7a6b5c4d</span><span class="o">);</span> <span class="c1">// 출력하는 값은 0x4d</span>
+<span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</pre></table></code></div></div><h3 id="바이트-단위로-읽기">바이트 단위로 읽기</h3><p>1) 파일의 데이터를 읽을 객체를 준비한다.</p><ul><li><code class="language-plaintext highlighter-rouge">new FileInputStream(파일경로)</code><li>해당 경로에 파일이 존재하지 않으면 예외가 발생한다.</ul><p>2) 1바이트를 읽는다.</p><ul><li><code class="language-plaintext highlighter-rouge">read()</code> 메서드의 리턴 타입이 int라 하더라도 1바이트를 읽어 리턴한다.</ul><p>3) 읽기 도구를 닫는다.</p><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="nc">FileInputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="s">"temp/test1.data"</span><span class="o">);</span>
+<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span> <span class="c1">// 0x4d</span>
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</pre></table></code></div></div><h3 id="바이트-배열-출력하기">바이트 배열 출력하기</h3><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="nc">FileOutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="s">"temp/test.data"</span><span class="o">);</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[]</span> <span class="o">{</span><span class="mh">0x7a</span><span class="o">,</span> <span class="mh">0x6b</span><span class="o">,</span> <span class="mh">0x5c</span><span class="o">,</span> <span class="mh">0x4d</span><span class="o">,</span> <span class="mh">0x3e</span><span class="o">,</span> <span class="mh">0x2f</span><span class="o">,</span> <span class="mh">0x30</span><span class="o">};</span>
+<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">bytes</span><span class="o">);</span>
+<span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</pre></table></code></div></div><p>바이트 배열의 특정 부분을 출력할 때는 <code class="language-plaintext highlighter-rouge">wirte()</code>에 파라미터로 offset과 length 값을 넘겨준다.</p><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">bytes</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span> <span class="c1">// 2번 데이터부터 3바이트를 출력한다.</span>
+</pre></table></code></div></div><h3 id="바이트-배열-읽기">바이트 배열 읽기</h3><ul><li><strong>버퍼(buffer)</strong>: 임시 데이터를 저장하기 위해 만든 바이트 배열<li><code class="language-plaintext highlighter-rouge">read(버퍼의 주소)</code><ul><li>버퍼가 꽉 찰 때까지 읽는다.<li>버퍼의 크기보다 파일의 데이터가 적으면 파일을 모두 읽어 저장한다.<li>주의! <strong>리턴 값은 읽은 바이트의 개수</strong>이다.</ul></ul><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="nc">FileInputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="s">"temp/test1.data"</span><span class="o">);</span>
+<span class="c1">// 바이트를 저장할 배열을 넉넉히 준비</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">buf</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="mi">100</span><span class="o">];</span>
+<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buf</span><span class="o">);</span>
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"읽은 바이트 수: %d\n"</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+  <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%x "</span><span class="o">,</span> <span class="n">buf</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+
+<span class="cm">/*
+읽은 바이트 수: 7
+7a 6b 5c 4d 3e 2f 30 
+*/</span>
+</pre></table></code></div></div><p>읽은 데이터를 바이트 배열의 특정 위치에 저장하려면 <code class="language-plaintext highlighter-rouge">read(버퍼의주소, 저장할위치, 읽을바이트개수)</code>를 사용한다.</p><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buf</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span> <span class="c1">// 40바이트를 읽어 10번 방부터 저장한다.</span>
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%d\n"</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+  <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%x "</span><span class="o">,</span> <span class="n">buf</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+<span class="c1">//7</span>
+<span class="c1">//0 0 0 0 0 0 0 0 0 0 7a 6b 5c 4d 3e 2f 30 0 0 0 </span>
+</pre></table></code></div></div><h3 id="fileinputstrewam-활용-jpeg-파일-읽기">FileInputStrewam 활용: JPEG 파일 읽기</h3><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+</pre><td class="rouge-code"><pre><span class="c1">//1) 파일 정보를 준비한다.</span>
+<span class="nc">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="s">"sample/photo1.jpg"</span><span class="o">);</span>
+
+<span class="c1">//2) 파일을 읽을 도구를 준비한다.</span>
+<span class="nc">FileInputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="n">file</span><span class="o">);</span>
+
+<span class="c1">// =&gt; SOI(Start of Image) Segment 읽기: 2바이트</span>
+<span class="kt">int</span> <span class="n">b1</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span> <span class="c1">// 00 00 00 ff</span>
+<span class="kt">int</span> <span class="n">b2</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span> <span class="c1">// 00 00 00 d8</span>
+<span class="kt">int</span> <span class="n">soi</span> <span class="o">=</span> <span class="n">b1</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span> <span class="o">|</span> <span class="n">b2</span><span class="o">;</span>
+<span class="c1">//   00 00 00 ff &lt;== b1</span>
+<span class="c1">//   00 00 ff 00 &lt;== b1 &lt;&lt; 8</span>
+<span class="c1">// | 00 00 00 d8 &lt;== b2</span>
+<span class="c1">// ------------------</span>
+<span class="c1">//   00 00 ff d8</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"SOI: %x\n"</span><span class="o">,</span> <span class="n">soi</span><span class="o">);</span>
+
+<span class="c1">// =&gt; JFIF-APP0 Segment Marker 읽기: 2바이트</span>
+<span class="kt">int</span> <span class="n">jfifApp0Marker</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">()</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span> <span class="o">|</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"JFIF APP0 Marker: %x\n"</span><span class="o">,</span> <span class="n">jfifApp0Marker</span><span class="o">);</span>
+
+<span class="c1">// =&gt; JFIF-APP0 Length: 2바이트</span>
+<span class="kt">int</span> <span class="n">jfifApp0Length</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">()</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span> <span class="o">|</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"JFIF APP0 정보 길이: %d\n"</span><span class="o">,</span> <span class="n">jfifApp0Length</span><span class="o">);</span>
+
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">jfifApp0Info</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">jfifApp0Length</span><span class="o">];</span>
+<span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">jfifApp0Info</span><span class="o">);</span>
+
+<span class="c1">// =&gt; JFIF-APP0 Length: 5바이트</span>
+<span class="nc">String</span> <span class="n">jfifApp0Id</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">jfiApp0Info</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"JFIF App ID: %s\n"</span><span class="o">,</span> <span class="n">jfifApp0Id</span><span class="o">);</span>
+
+<span class="c1">// SOF0(Start of Frame) 정보 읽기</span>
+<span class="c1">// - 그림 이미지의 크기 및 샘플링에 관한 정보를 보관하고 있다.</span>
+<span class="c1">// - 0xFFC0 ~ 0xFFC2 로 표시한다.</span>
+
+
+<span class="c1">// =&gt; SOF Marker 찾기</span>
+<span class="kt">int</span> <span class="n">b</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">b</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span>
+    <span class="k">break</span><span class="o">;</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">b</span> <span class="o">==</span> <span class="mh">0xFF</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">b</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span>
+      <span class="k">break</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">b</span> <span class="o">&gt;=</span> <span class="mh">0xC0</span> <span class="o">&amp;&amp;</span> <span class="n">b</span> <span class="o">&lt;=</span> <span class="mh">0xC2</span><span class="o">)</span>
+      <span class="k">break</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="k">if</span> <span class="o">(</span><span class="n">b</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+  <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">prinln</span><span class="o">(</span><span class="s">"유효한 JPEG 파일이 아닙니다."</span><span class="o">);</span>
+  <span class="k">return</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// =&gt; SOF Length 읽기: 2바이트</span>
+<span class="kt">int</span> <span class="n">sofLength</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">()</span> <span class="o">&lt;&lt;</span> <span class="mi">9</span> <span class="o">|</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%SOF 데이터 크기: %d\n"</span><span class="o">,</span> <span class="n">sofLength</span><span class="o">);</span>
+
+<span class="c1">// =&gt; SOF 데이터 읽기: 17바이트 (위에서 알아낸 크기)</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">sofData</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">sofLength</span><span class="o">];</span>
+<span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">sofData</span><span class="o">);</span>
+
+<span class="c1">// =&gt; SOF 샘플링 정밀도: 1바이트</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"SOF 샘플링 정밀도: %s\n"</span><span class="o">,</span> <span class="n">sofData</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+
+<span class="c1">// =&gt; SOF 이미지 높이: 2바이트</span>
+<span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="o">((</span><span class="n">sofData</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="o">)</span> <span class="o">&amp;</span> <span class="mh">0xff00</span><span class="o">)</span> <span class="o">|</span> <span class="o">(</span><span class="n">sofData</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="o">);</span>
+
+<span class="c1">// =&gt; SOF 이미지 너비: 2바이트</span>
+<span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="o">((</span><span class="n">softData</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="o">)</span> <span class="o">&amp;</span> <span class="mh">0xff00</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">softData</span><span class="o">[</span><span class="mi">4</span><span class="o">]</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="o">));</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"SOF 이미지 크기(w x h): %d x %d\n"</span><span class="o">,</span> <span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">);</span>
+
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</pre></table></code></div></div><h3 id="텍스트-출력하기">텍스트 출력하기</h3><p>String 객체의 데이터를 출력하려면 문자열을 담은 byte[] 배열을 리턴 받아야 한다.</p><p><code class="language-plaintext highlighter-rouge">String.getBytes()</code></p><ul><li>특정 인코딩을 지정하지 않고 그냥 바이트 배열을 달라고 하면, String 클래스는 JVM 환경 변수 ‘file.encoding’에 설정된 문자집합으로 바이트 배열을 인코딩한다.<li>이클립스에서 애플리케이션을 실행할 때 다음과 같이 JVM 환경변수를 자동으로 붙인다(<code class="language-plaintext highlighter-rouge">$ java -Dfile.encoding=UTF-8...</code>) 그래서 <code class="language-plaintext highlighter-rouge">getBytes()</code>가 리턴한 바이트 배열의 인코딩은 UTF-8이 되는 것이다.<li>만약 이 예제를 이클립스가 아니라 콘솔창에서 <code class="language-plaintext highlighter-rouge">-Dfile.encoding=UTF-8</code> 옵션 없이 실행한다면, <code class="language-plaintext highlighter-rouge">getBytes()</code>가 리턴하는 바이트 배열은 OS의 기본 인코딩으로 변환될 것이다.<ul><li>Windows =&gt; MS949<li>Linux =&gt; UTF-8</ul><li>OS에 상관 없이 동일한 실행 결과를 얻고 싶다면<ul><li>file.encoding 옵션 붙이기: <code class="language-plaintext highlighter-rouge">java -Dfile.encoding=UTF-8 -cp bin/main...</code><li><code class="language-plaintext highlighter-rouge">getBytes()</code> 호출할 때 인코딩할 문자 집합을 지정하기: <code class="language-plaintext highlighter-rouge">str.getBytes("UTF-8")</code></ul></ul><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+</pre><td class="rouge-code"><pre><span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="s">"AB가각"</span><span class="o">);</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"file.encoding=%s\n"</span><span class="o">,</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"file.encoding"</span><span class="o">));</span>
+
+<span class="c1">// 1. 인코딩 지정X </span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes1</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
+<span class="c1">// 이클립스: UCS2 =&gt; UTF-8</span>
+<span class="c1">// Windows: UCS2 =&gt; MS949</span>
+<span class="c1">// Linux: UCS2 =&gt; UTF-8</span>
+<span class="c1">// macOS: UCS2 =&gt; UTF-8</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">byte</span> <span class="n">b</span> <span class="o">:</span> <span class="n">bytes1</span><span class="o">)</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%x "</span><span class="o">,</span> <span class="n">b</span><span class="o">);</span>
+<span class="c1">// (이클립스) 41 42 ea b0 80 ea b0 81</span>
+<span class="nc">FileOutputStream</span> <span class="n">out1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="s">"temp/utf.txt"</span><span class="o">);</span>
+<span class="n">out1</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">bytes</span><span class="o">);</span>
+
+<span class="c1">// 2. MS949로 인코딩하기</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes2</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="s">"MS949"</span><span class="o">);;</span> <span class="c1">// UCS2 ==&gt; MS949</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">byte</span> <span class="n">b</span> <span class="o">:</span> <span class="n">bytes2</span><span class="o">)</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%x "</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span>
+<span class="c1">// 41 42 b0 a1 b0 a2</span>
+<span class="nc">FileOutputStream</span> <span class="n">out2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="s">"temp/ms949.txt"</span><span class="o">);</span>
+<span class="n">out2</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">bytes2</span><span class="o">);</span>
+
+<span class="c1">// 3. UTF-16BE로 인코딩하기</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes3</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="s">"UTF-16BE"</span><span class="o">);</span> <span class="c1">// UCS2 ==&gt; UTF-16BE</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">byte</span> <span class="n">b</span> <span class="o">:</span> <span class="n">bytes3</span><span class="o">)</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%x "</span><span class="o">,</span> <span class="n">b</span><span class="o">);</span>
+<span class="c1">// 0 41 0 42 ac 0 ac 1</span>
+<span class="nc">FileOutputStream</span> <span class="n">out3</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="s">"temp/utf16be.txt"</span><span class="o">);</span>
+<span class="n">out3</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">bytes3</span><span class="o">);</span>
+
+<span class="c1">// 4. UTF-16LE로 인코딩하기</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes4</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="s">"UTF-16LE"</span><span class="o">);</span> <span class="c1">// UCS2 ==&gt; UTF-16LE</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">byte</span> <span class="n">b</span> <span class="o">:</span> <span class="n">bytes4</span><span class="o">)</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%x "</span><span class="o">,</span> <span class="n">b</span><span class="o">);</span>
+<span class="c1">// 41 0 42 0 0 ac 1 ac</span>
+<span class="nc">FileOutputStream</span> <span class="n">out4</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="s">"temp/utf16le.txt"</span><span class="o">);</span>
+<span class="n">out4</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">bytes4</span><span class="o">);</span>
+
+<span class="c1">// 5. UTF-8로 인코딩하기</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes5</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">);</span> <span class="c1">// UCS2 ==&gt; UTF-8</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">byte</span> <span class="n">b</span> <span class="o">:</span> <span class="n">bytes5</span><span class="o">)</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%x "</span><span class="o">,</span> <span class="n">b</span><span class="o">);</span>
+<span class="c1">// 41 42 ea b0 80 ea b0 81 </span>
+<span class="nc">FileOutputStream</span> <span class="n">out5</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="s">"temp/utf8.txt"</span><span class="o">);</span>
+<span class="n">out4</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">bytes5</span><span class="o">);</span>
+</pre></table></code></div></div><h3 id="텍스트-데이터-읽기">텍스트 데이터 읽기</h3><p>파일의 각 문자를 읽기</p><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="nc">StringBuffer</span>  <span class="n">strbuf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuffer</span><span class="o">();</span>
+<span class="nc">FileInputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="s">"sample/ms949"</span><span class="o">);</span>
+
+<span class="c1">// 'A' 문자 읽기</span>
+<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span> <span class="c1">// 1 byte 읽기</span>
+
+<span class="c1">// 'B' 문자 읽기</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span>
+
+<span class="c1">// '가' 문자 읽기</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">()</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span> <span class="o">|</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span> <span class="c1">// 2byte 읽기</span>
+
+<span class="c1">// '각' 문자 읽기</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">()</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span> <span class="o">|</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span> <span class="c1">// 2byte 읽기</span>
+</pre></table></code></div></div><p>파일의 데이터를 한 번에 읽어오자.</p><p>바이트가 <strong>어떤 문자 집합으로 인코딩 되었는지 알려주지 않는다면</strong>, <strong>String 객체를 생성</strong>할 때 JVM 환경 변수 <strong>file.encoding 에 설정된 문자집합으로 가정</strong>하고 <strong>UCS2 문자 코드로 변환</strong>한다.</p><p>다음의 코드는 <code class="language-plaintext highlighter-rouge">utf-8</code> 파일을 읽는 코드인데, 실행 환경에 따라 문자 변환의 결과가 달라진다.</p><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre><span class="c1">// JVM 환경변수 file.encoding 값</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"file.encoding=%s\n"</span><span class="o">,</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"file.encoding"</span><span class="o">));</span>
+<span class="nc">FileInputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="s">"sample/utf8.txt"</span><span class="o">);</span>
+
+<span class="c1">// 파일의 데이터를 한 번에 읽어오자.</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">buf</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="mi">1000</span><span class="o">];</span>
+<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buf</span><span class="o">);</span><span class="c1">// &lt;= 41 42 ea b0 80 ea b0 81 (AB가각)</span>
+
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="c1">// 읽은 바이트를 String 객체로 만들어보자.</span>
+<span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">buf</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span> <span class="c1">//=&gt; 바이트가 어떤 문자 집합으로 되었는지 알려주지 않는다면?</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
+</pre></table></code></div></div><ul><li>이클립스에서 실행: 성공<ul><li>JVM 실행 옵션에 <code class="language-plaintext highlighter-rouge">-Dfile.encoding=UTF-8</code> 환경 변수가 자동으로 붙는다. 그래서 String 클래스는 바이트 배열의 값을 UCS2로 바꿀 때 UTF-8 문자표를 사용하여 UCS2로 변환한다.<li>utf8.txt =&gt; 41 42 ea b0 80 ea b0 81<li>UCS2 =&gt; 0041 0042 ac00 ac01 &lt;== 정상적으로 바뀐다.</ul><li>Windows 콘솔에서 실행: 실패<ul><li>JVM을 실행할 때 file.encoding을 설정하지 않으면 OS의 기본 문자집합으로 설정한다.<li>Windows의 기본 문자집합은 MS949이므로 file.encoding 값도 MS949로 설정된다.<li>바이트 배열은 UTF-8로 인코딩 되었는데, MS949 문자표를 사용하여 UCS2로 변환하려 하니까 잘못된 문자로 변환되는 것이다.<li>해결책: JVM을 실행할 때 file.encoding 옵션에 정확하게 해당 파일의 인코딩을 설정해야 한다. 즉 utf-8.txt 파일은 utf-8로 인코딩 되었기 때문에 <code class="language-plaintext highlighter-rouge">-Dfile.encoding=UTF-8</code> 옵션을 붙여서 실행해야 UCS2로 정산 변환된다.</ul><li>Linux/macOS 콘솔에서 실행: 성공<ul><li>Linux와 macOS의 기본 문자 집합은 UTF-8이다.<li>따라서 JVM을 실행할 때 file.encoding 옵션에 정확하게 해당 파일의 인코딩을 지정하지 않아도 해당 파일을 UTF-8 문자로 간주하여 UTF-8 문자표에 따라 UCS2로 변환한다.</ul></ul><p>다음의 코드는 <code class="language-plaintext highlighter-rouge">MS949</code> 파일을 읽는 코드인데, 실행 환경에 따라 문자 변환의 결과가 달라진다.</p><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre><span class="c1">// JVM 환경변수 file.encoding 값</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"file.encoding=%s\n"</span><span class="o">,</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"file.encoding"</span><span class="o">));</span>
+<span class="nc">FileInputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="s">"sample/ms949.txt"</span><span class="o">);</span>
+
+<span class="c1">// 파일의 데이터를 한 번에 읽어오자.</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">buf</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="mi">1000</span><span class="o">];</span>
+<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buf</span><span class="o">);</span>
+
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="c1">// 읽은 바이트를 String 객체로 만들어보자.</span>
+<span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">buf</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span> <span class="c1">//=&gt; 바이트가 어떤 문자 집합으로 되었는지 알려주지 않는다면?</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
+
+<span class="c1">// MS949 코드를 UTF-8 문자로 가정하고 다룰 때 한글이 깨지는 원리! </span>
+<span class="c1">// - ms949.txt </span>
+<span class="c1">//   =&gt; 01000001 01000010 10110000 10100001 10110000 10100010 = 41 42 b0 a1 b0 a2</span>
+<span class="c1">// - MS949 코드를 변환할 때 UTF-8 문자표를 사용하면 다음과 같이 잘못된 변환을 수행한다.</span>
+<span class="c1">//   byte(UTF-8) =&gt; char(UCS2) </span>
+<span class="c1">//     01000001  -&gt; 00000000 01000001 (00 41) = 'A' &lt;-- 정상적으로 변환되었음.</span>
+<span class="c1">//     01000010  -&gt; 00000000 01000010 (00 42) = 'B' &lt;-- 정상적으로 변환되었음.</span>
+<span class="c1">//     10110000  -&gt; 꽝 (xx xx) &lt;-- 해당 바이트가 UTF-8 코드 값이 아니기 때문에 UCS2로 변환할 수 없다.</span>
+<span class="c1">//     10100001  -&gt; 꽝 (xx xx) &lt;-- 그래서 꽝을 의미하는 특정 코드 값이 들어 갈 것이다.</span>
+<span class="c1">//     10110000  -&gt; 꽝 (xx xx) &lt;-- 그 코드 값을  문자로 출력하면 =&gt; �</span>
+<span class="c1">//     10100010  -&gt; 꽝 (xx xx)</span>
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://user-images.githubusercontent.com/50407047/93708091-6fddc280-fb6e-11ea-8371-5d36f382ce77.png" alt="utf-8" /></p><p>위의 표에서 MS949로 표현된 한글(예: 10110000)은 UTF-8표현에서 찾을 수 없다. 영어 문자의 경우 (ex: 01000001) UTF-8에서 첫 번째 줄과 일치하기 때문에 UTF-16BE로 바꿀 수 있다. 따라서 MS949 코드를 UTF-8 문자로 가정하고 다룰 때 영어는 잘 나오지만 한글이 깨지는 것이다.</p><ul><li>이클립스에서 실행: 실패<ul><li>이클립스에서 JVM을 실행할 때 <code class="language-plaintext highlighter-rouge">-Dfile.encoding=UTF-8</code> 옵션을 붙인다.<li>따라서 String 클래스는 바이트 배열의 값을 UCS2로 변환할 때 UTF-8 문자표를 사용한다.<li>바이트 배열의 값이 MS949이기 때문에 MS949 문자표로 변환하면 UCS2 문자 코드로 잘 변환되는 것이다.</ul><li>Windows 콘솔에서 실행: 성공<li>JVM을 실행할 때 <code class="language-plaintext highlighter-rouge">file.encoding</code> 환경 변수를 지정하지 않으면 OS의 기본 문자집합으로 설정한다.<li>Windows의 기본 문자 집합은 MS949이기 때문에 file.encoding 값은 MS949로 설정된다.<li>바이트 배열의 값이 MS949이기 때문에 MS949 문자표로 변환하면 UCS2 문자 코드로 잘 변환되는 것이다.</ul><p>JVM 환경 변수 <strong><code class="language-plaintext highlighter-rouge">file.encoding</code>에 설정된 문자표에 상관 없이</strong> String 객체를 만들 때 바이트 배열의 인코딩 문자 집합을 정확하게 알려준다면, UCS2 코드 값으로 정확하게 변환해줄 것이다.</p><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"file.encoding=%s\n"</span><span class="o">,</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"file.encoding"</span><span class="o">));</span> <span class="c1">// UTF-8</span>
+<span class="nc">FileInputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="s">"sample/utf16le.txt"</span><span class="o">);</span>
+
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">buf</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="mi">100</span><span class="o">];</span>
+<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buf</span><span class="o">);</span>
+
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">buf</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">count</span><span class="o">,</span> <span class="s">"UTF-16LE"</span><span class="o">);</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
+</pre></table></code></div></div><h2 id="character-stream">Character Stream</h2><h3 id="문자-단위로-출력하기">문자 단위로 출력하기</h3><p>배경: JVM의 문자열을 파일로 출력할 때 바이트 스트림 클래스를 사용하면 <strong>문자집합을 지정해야 하는 번거로움</strong>이 있다. 이런 번거로움을 해결하기 위해 문자 스트림 클래스인 Reader/Writer 계열의 클래스가 등장했다.</p><ul><li>문자 단위로 출력할 도구 준비<ul><li><code class="language-plaintext highlighter-rouge">FileWriter out = new FileWriter("temp/test2.txt");</code></ul><li>문자 출력하기<ul><li>자바는 문자 데이터를 다룰 때 UCS2(2 byte) 유니코드를 사용한다.<li>그래서 출력할 때 UCS2 유니코드 값을 JVM에 설정된 기본 문자코드표의 값으로 변환하여 출력한다.<li>JVM을 실행할 때 출력 데이터의 문자 코드표를 지정하지 않으면 OS의 기본 문자코드표에 따라 변환한다.<ul><li>Windows OS(MS949), Unix(UTF-8)</ul><li>JVM을 실행할 때 출력 데이터의 문자 코드표를 지정하는 방법<ul><li><code class="language-plaintext highlighter-rouge">java -Dfile.encoding=문자코드표 -cp 클래스경로 클래스명</code></ul><li>이클립스에서 실행<ul><li>JVM을 실행할 때 <code class="language-plaintext highlighter-rouge">-Dfile.encoding=UTF-8</code> 옵션을 자동으로 붙인다.<li>그래서 출력할 때, UCS2를 UTF-8 코드로 변환하여 파일에 쓴다.</ul><li>콘솔창에서 실행<ul><li>file.encoding 환경 변수를 지정하지 않으면, OS가 기본으로 사용하는 문자 코드로 변환하여 파일에 쓴다. (Windows: MS949, Unix: UTF-8)<li>JVM을 실행할 때 <code class="language-plaintext highlighter-rouge">-Dfile.encoding=문자코드표</code> 옵션을 지정한다면, 해당 옵션에 지정된 문자 코드로 변환하여 파일에 쓴다.</ul></ul><li>결론<ul><li>OS에 영향 받지 않으려면, JVM을 실행할 때 반드시 file.encoding JVM 환경 변수를 설정한다.<li>문자 집합은 국제 표준인 UTF-8을 사용한다.</ul></ul><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+</pre><td class="rouge-code"><pre><span class="c1">// character stream - 문자 단위로 출력하기</span>
+<span class="kn">package</span> <span class="nn">com.eomcs.io.ex03</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.FileWriter</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Exam0110</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+    <span class="c1">// 1) 문자 단위로 출력할 도구 준비</span>
+    <span class="nc">FileWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileWriter</span><span class="o">(</span><span class="s">"temp/test2.txt"</span><span class="o">);</span>
+
+    <span class="c1">// 현재 JVM 환경 변수 'file.encoding' 값 알아내기</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"file.encoding=%s\n"</span><span class="o">,</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"file.encoding"</span><span class="o">));</span>
+
+    <span class="c1">// =&gt; 이 예제를 이클립스에서 실행한다면,</span>
+    <span class="c1">// 앞의 2바이트는 버리고,</span>
+    <span class="c1">// 뒤의 2바이트(UCS2)를 UTF-8 코드표에 따라</span>
+    <span class="c1">// 1 ~ 4 바이트 값으로 변환하여 파일에 쓴다.</span>
+    <span class="c1">// =&gt; 즉 이클립스에서 자바 프로그램을 실행할 때</span>
+    <span class="c1">//    -Dfile.encoding=UTF-8 옵션을 붙여 실행하기 때문이다.</span>
+    <span class="c1">// =&gt; OS의 기본 문자표로 출력하고 싶다면,</span>
+    <span class="c1">//    콘솔창에서 위 옵션 없이 직접 이 클래스를 실행하라.</span>
+    <span class="c1">// </span>
+    <span class="c1">// UCS2에서 한글 '가'는 ac00이다.</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="mh">0x7a6bac00</span><span class="o">);</span> 
+    <span class="c1">// - 앞의 2바이트(7a6b)는 버린다.</span>
+    <span class="c1">// - 뒤의 2바이트(ac00)은 UTF-8(eab080) 코드 값으로 변환되어 파일에 출력된다.</span>
+
+    <span class="c1">// UCS2에서 영어 A는 0041이다.</span>
+    <span class="c1">// 출력하면, UTF-8 코드 값(41)이 파일에 출력된다.</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="mh">0x7a5f0041</span><span class="o">);</span>  <span class="c1">// </span>
+    <span class="c1">// - 앞의 2바이트(7a5f)는 버린다.</span>
+    <span class="c1">// - 뒤의 2바이트는 UTF-8(41) 코드 값으로 변환되어 파일에 출력된다.</span>
+
+    <span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"출력 완료!"</span><span class="o">);</span>
+
+  <span class="o">}</span>
+<span class="o">}</span>
+
+</pre></table></code></div></div><h3 id="문자-단위로-읽기">문자 단위로 읽기</h3><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre><td class="rouge-code"><pre><span class="c1">// 1) 파일의 데이터를 읽을 객체를 준비한다. </span>
+<span class="nc">FileReader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileReader</span><span class="o">(</span><span class="s">"sample/ms949.txt"</span><span class="o">);</span> <span class="c1">// 41 42 b0 a1 b0 a2</span>
+
+<span class="c1">// 2) 출력 스트림 객체를 생성할 때 파일의 문자 집합을 지정하지 않으면,</span>
+<span class="c1">//    JVM 환경 변수 'file.encoding'에 설정된 문자코드표에 따라 </span>
+<span class="c1">//    바이트를 읽어서 UCS2로 바꾼 후에 리턴한다.</span>
+
+<span class="c1">// 현재 JVM 환경 변수 'file.encoding' 값 알아내기</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"file.encoding=%s\n"</span><span class="o">,</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"file.encoding"</span><span class="o">));</span>
+
+<span class="c1">// file.encoding이 UTF-8로 되어 있다면,</span>
+<span class="c1">// =&gt; 영어는 1바이를 읽어서 2바이트 UCS2로 변환한다.</span>
+<span class="c1">// =&gt; MS949도 영어인 경우 UTF-8과 같기 때문에 변환하는데 문제가 없다.</span>
+<span class="kt">int</span> <span class="n">ch1</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span> <span class="c1">// 41 =&gt; 0041('A')</span>
+<span class="kt">int</span> <span class="n">ch2</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span> <span class="c1">// 42 =&gt; 0042('B')</span>
+
+<span class="c1">// =&gt; 한글은 MS949와 UTF-8이 다르다.</span>
+<span class="c1">//    MS949로 인코딩 된 것을 UTF-8로 간주하여 변환한다면,</span>
+<span class="c1">//    UTF-8 문자가 아니기 때문에 </span>
+<span class="c1">//    다음과 같이 잘못되었다는 의미로 특정 값(fffd)으로 변환한다.</span>
+<span class="kt">int</span> <span class="n">ch3</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span> <span class="c1">// b0 a1 =&gt; fffd =&gt; �</span>
+<span class="kt">int</span> <span class="n">ch4</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span> <span class="c1">// b0 a2 =&gt; fffd =&gt; �</span>
+
+<span class="c1">// 3) 읽기 도구를 닫는다.</span>
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%x, %x, %x, %x\n"</span><span class="o">,</span> <span class="n">ch1</span><span class="o">,</span> <span class="n">ch2</span><span class="o">,</span> <span class="n">ch3</span><span class="o">,</span> <span class="n">ch4</span><span class="o">);</span>
+</pre></table></code></div></div><h3 id="문자-배열-출력하기">문자 배열 출력하기</h3><p>FileOutputStream은 byte[] 을 출력하지만, FileWriter는 char[]을 출력한다.</p><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre><span class="nc">FileWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileWriter</span><span class="o">(</span><span class="s">"temp/test2.txt"</span><span class="o">);</span>
+
+<span class="kt">char</span><span class="o">[]</span> <span class="n">chars</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="o">[]</span> <span class="o">{</span><span class="sc">'A'</span><span class="o">,</span> <span class="sc">'B'</span><span class="o">,</span> <span class="sc">'C'</span><span class="o">,</span> <span class="sc">'가'</span><span class="o">,</span> <span class="sc">'각'</span><span class="o">,</span> <span class="sc">'간'</span><span class="o">,</span> <span class="sc">'똘'</span><span class="o">,</span> <span class="sc">'똥'</span><span class="o">};</span>
+
+<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">chars</span><span class="o">);</span> <span class="c1">// 문자 배열 전체를 출력한다.</span>
+
+<span class="c1">// 당연히 UCS2를 JVM 환경 변수 'file.encoding'에 설정된 문자 코드표에 따라 변환하여 출력한다.</span>
+<span class="c1">// JVM이 입출력 문자 코드표로 UTF-8을 사용한다면</span>
+<span class="c1">// 영어는 1바이트로 변환되어 출력될 것이고,</span>
+<span class="c1">// 한글은 3바이트로 변환되어 출력될 것이다.</span>
+<span class="c1">// JVM(UCS2)    File(UTF-8)</span>
+<span class="c1">// 00 41    ==&gt; 41</span>
+<span class="c1">// 00 42    ==&gt; 42</span>
+<span class="c1">// 00 43    ==&gt; 43</span>
+<span class="c1">// ac 00    ==&gt; ea b0 80</span>
+<span class="c1">// ac 01    ==&gt; ea b0 81</span>
+<span class="c1">// ac 04    ==&gt; ea b0 84</span>
+<span class="c1">// b6 18    ==&gt; eb 98 98</span>
+<span class="c1">// b6 25    ==&gt; eb 98 a5</span>
+<span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</pre></table></code></div></div><p>문자 배열의 특정 부분을 출력하기 위해서는 <code class="language-plaintext highlighter-rouge">wirte()</code> 메서드에 index과 length 값을 설정한다.</p><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="nc">FileWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileWriter</span><span class="o">(</span><span class="s">"temp/test2.txt"</span><span class="o">);</span>
+<span class="kt">char</span><span class="o">[]</span> <span class="n">chars</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="o">[]</span> <span class="o">{</span><span class="sc">'A'</span><span class="o">,</span><span class="sc">'B'</span><span class="o">,</span><span class="sc">'C'</span><span class="o">,</span><span class="sc">'가'</span><span class="o">,</span><span class="sc">'각'</span><span class="o">,</span><span class="sc">'간'</span><span class="o">,</span><span class="sc">'똘'</span><span class="o">,</span><span class="sc">'똥'</span><span class="o">};</span> 
+<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">chars</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span> <span class="c1">// 2번 문자부터 3 개의 문자를 출력한다.</span>
+<span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"데이터 출력 완료!"</span><span class="o">);</span>
+</pre></table></code></div></div><h3 id="문자-배열-읽기">문자 배열 읽기</h3><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre><td class="rouge-code"><pre><span class="nc">FileReader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileReader</span><span class="o">(</span><span class="s">"temp/test2.txt"</span><span class="o">);</span>
+
+<span class="kt">char</span><span class="o">[]</span> <span class="n">buf</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="o">[</span><span class="mi">100</span><span class="o">];</span>
+
+<span class="c1">// read(버퍼의주소)</span>
+<span class="c1">// =&gt; 버퍼가 꽉 찰 때까지 읽는다.</span>
+<span class="c1">// =&gt; 물론 버퍼 크기보다 파일의 데이터가 적으면 파일을 모두 읽어 버퍼에 저장한다.</span>
+<span class="c1">// =&gt; 리턴 값은 읽은 문자의 개수이다. 바이트의 개수가 아니다!!!!!</span>
+<span class="c1">//    FileInputStream.read()의 리턴 값은 읽은 바이트의 개수였다.</span>
+<span class="c1">// =&gt; 파일을 읽을 때 JVM 환경 변수 'file.encoding'에 설정된 문자코드표에 따라 바이트를 읽는다.</span>
+<span class="c1">//    그리고 2바이트 UCS2 코드 값으로 변환하여 리턴한다.</span>
+<span class="c1">// =&gt; JVM의 문자코드표가 UTF-8이라면,</span>
+<span class="c1">//    파일을 읽을 때, 영어나 숫자, 특수기호는 1바이트를 읽어 UCS2으로 변환할 것이고</span>
+<span class="c1">//    한글은 3바이트를 읽어 UCS2으로 변환할 것이다.</span>
+<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buf</span><span class="o">);</span> 
+
+<span class="c1">// File(UTF-8)  JVM(UCS2)    </span>
+<span class="c1">// 41       ==&gt; 00 41</span>
+<span class="c1">// 42       ==&gt; 00 42</span>
+<span class="c1">// 43       ==&gt; 00 43</span>
+<span class="c1">// ea b0 80 ==&gt; ac 00</span>
+<span class="c1">// ea b0 81 ==&gt; ac 01</span>
+<span class="c1">// ea b0 84 ==&gt; ac 04</span>
+<span class="c1">// eb 98 98 ==&gt; b6 18</span>
+<span class="c1">// eb 98 a5 ==&gt; b6 25</span>
+
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%d\n"</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+  <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%c(%x)\n"</span><span class="o">,</span> <span class="n">buf</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">buf</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+</pre></table></code></div></div><p>읽은 데이터를 문자 배열의 특정 위치에 저장하기 위해서는 <code class="language-plaintext highlighter-rouge">read(버퍼의주소, 저장할위치, 읽을바이트개수)</code> 메서드를 사용한다. 이때 리턴 값은 실제 읽은 문자의 개수이다.</p><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="nc">FileReader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileReader</span><span class="o">(</span><span class="s">"temp/test2.txt"</span><span class="o">);</span>
+
+<span class="kt">char</span><span class="o">[]</span> <span class="n">buf</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="o">[</span><span class="mi">100</span><span class="o">];</span>
+
+<span class="c1">// read(버퍼의주소, 저장할위치, 읽을바이트개수)</span>
+<span class="c1">// =&gt; 리턴 값은 실제 읽은 문자의 개수이다.</span>
+<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buf</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span> <span class="c1">// 40개의 문자를 읽어 10번 방부터 저장한다.</span>
+
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%d\n"</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+
+<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+  <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%c(%x) "</span><span class="o">,</span> <span class="n">buf</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">buf</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+</pre></table></code></div></div></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/bitcamp/'>bitcamp</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/bitcamp/" class="post-tag no-text-decoration" >bitcamp</a> <a href="/tags/java/" class="post-tag no-text-decoration" >java</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=학원 #43일차: 파일 입출력 API - 하연&url=https://hayeon17kim.github.io//posts/200918-43/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=학원 #43일차: 파일 입출력 API - 하연&u=https://hayeon17kim.github.io//posts/200918-43/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=학원 #43일차: 파일 입출력 API - 하연&url=https://hayeon17kim.github.io//posts/200918-43/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/system-deisign-capacity-estimation/">System Design: Capacity Estimate</a><li><a href="/posts/today-i-learned-2021-04-27/">주니어 성장일기: 2021.04.27</a><li><a href="/posts/today-i-learned-2021-04-26/">주니어 성장일기: 2021.04.26</a><li><a href="/posts/fastcampus-01/">자료구조와 알고리즘이란</a><li><a href="/posts/today-i-learned-2021-04-25/">주니어 성장일기: 2021.04.25</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/java/">java</a> <a class="post-tag" href="/tags/javascript/">JavaScript</a> <a class="post-tag" href="/tags/bitcamp/">bitcamp</a> <a class="post-tag" href="/tags/modernjs/">modernJS</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/algorithm/">algorithm</a> <a class="post-tag" href="/tags/trouble-shooting/">trouble-shooting</a> <a class="post-tag" href="/tags/devil/">devil</a> <a class="post-tag" href="/tags/corejs/">corejs</a> <a class="post-tag" href="/tags/network/">network</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/201123-85/"><div class="card-body"> <span class="timeago small" > Nov 23, 2020 <i class="unloaded">2020-11-23T00:00:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>학원 #85일차:서블릿 프로그래밍, WAS, JavaEE와 Servlet 컨테이너, Servlet 인터페이스의 Life-cycle 메서드</h3><div class="text-muted small"><p> 서블릿 프로그래밍 웹 애플리케이션 서버 아키텍쳐의 개념 JavaEE와 Servlet API의 관계 JavaEE 구현체와 서블릿 컨테이너의 관계 eomcs-web-project/src-00 예제 실습 Servlet 인터페이스와 Life-cycle 메서드 WAS(Web Application Server) 아키텍처 이전까지는 사...</p></div></div></a></div><div class="card"> <a href="/posts/201124-86/"><div class="card-body"> <span class="timeago small" > Nov 24, 2020 <i class="unloaded">2020-11-24T00:00:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>학원 #86일차:서블릿 프로그래밍, 프로젝트를 WAS 아키텍처로 전환</h3><div class="text-muted small"><p> 서블릿 컨테이너가 관리하는 컴포넌트는 서블릿, 필터, 리스너로 3가지이다. Servlet 만들기 1. javax.servlet.Servlet 인터페이스 구현 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38...</p></div></div></a></div><div class="card"> <a href="/posts/201125-87/"><div class="card-body"> <span class="timeago small" > Nov 25, 2020 <i class="unloaded">2020-11-25T00:00:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>학원 #87일차: HTML 태그 사용법</h3><div class="text-muted small"><p> HTML/CSS 학습법: 결과 화면 먼저 보고 소스코드를 확인하자 UI와 UX UX(User Experience; 사용자 경험): 사용자 편의성 ex: 링크에 hover했을 때 커서가 손모양으로 바뀌어야 한다. UI(User Interface): 기능을 하는 화면이 있는가 HTML ...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/200916-41/" class="btn btn-outline-primary" prompt="Older"><p>학원 #41일차: 람다(Lambda)</p></a> <a href="/posts/200921-44/" class="btn btn-outline-primary" prompt="Newer"><p>학원 #44일차: 파일 입출력: byte stream</p></a></div><div id="disqus" class="pt-2 pb-2"><p class="text-center text-muted small pb-5"> Loading comments from <a href="https://disqus.com/">Disqus</a> ...</p></div><script src="/assets/js/lib/jquery.disqusloader.min.js"></script> <script> const options = { scriptUrl: '//hayeon17kim-github-io.disqus.com/embed.js', disqusConfig: function() { this.page.title = '학원 #43일차: 파일 입출력 API'; this.page.url = 'https://hayeon17kim.github.io//posts/200918-43/'; this.page.identifier = '/posts/200918-43/'; } }; $.disqusLoader('#disqus', options); </script></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('.post-content img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2021 <a href="https://twitter.com/MONI56219559">hayeon_kim</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/java/">java</a> <a class="post-tag" href="/tags/javascript/">JavaScript</a> <a class="post-tag" href="/tags/bitcamp/">bitcamp</a> <a class="post-tag" href="/tags/modernjs/">modernJS</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/algorithm/">algorithm</a> <a class="post-tag" href="/tags/trouble-shooting/">trouble shooting</a> <a class="post-tag" href="/tags/devil/">devil</a> <a class="post-tag" href="/tags/corejs/">corejs</a> <a class="post-tag" href="/tags/network/">network</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://hayeon17kim.github.io/{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script>
