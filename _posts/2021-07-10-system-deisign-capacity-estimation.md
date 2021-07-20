@@ -22,9 +22,17 @@ tags: [ system-design ]
 - 3600 x 24 = 86,400s (day)
 - 86,400s x 30 = 2,500,000s (month)
 
-[CPU와 Memory](https://www.notion.so/cd5647685d854bb88d365d39a4d767a3)
+<br>
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bf06942f-b1f7-4067-ad57-b995ee5d4419/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bf06942f-b1f7-4067-ad57-b995ee5d4419/Untitled.png)
+**CPU와 메모리 속도(절대시간, CPU cycle 대비 상대시간)**
+| type      | time  | sec      |
+|-----------|-------|----------|
+| CPU cycle | 3ns   | 1s       |
+| RAM       | 120ns | 6m       |
+| SSD       | 150ns | 6days    |
+| HDD       | 10ms  | 12 month |
+
+![cpu-memory](https://user-images.githubusercontent.com/50407047/126295636-1c6d9d6a-dc51-49a4-9380-657c35d4e99b.png)
 
 ## 실제 사례
 
